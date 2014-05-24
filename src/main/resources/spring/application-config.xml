@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Uncomment and add your base-package here: -->
+	<!-- <context:component-scan base-package="com.luoxuan.prediction" /> -->
+
+	<bean id="pathManager" class="com.luoxuan.prediction.global.PathManager">
+		<property name="rootPath" value="/Users/bjutales/Documents/Development/LUO/"/>
+		<property name="originalDataFolder" value="data/"/>
+		<property name="resourcesFolder" value="resources/"/>
+		<property name="corpus" value="corpus.bin"/>
+		<property name="vectors" value="vectors.bin"/>
+		<property name="clusters" value="clusters.bin"/>
+		<property name="preprocessedDataFolder" value="preprocessed_data/"/>
+		<property name="resultsFolder" value="results/"/>
+	</bean>
+<!-- 	<bean id="singleFolderLoader" class="com.luoxuan.prediction.processor.SingleFolderLoader">
+	</bean> -->
+	<bean id="encodingHelper" class="com.luoxuan.prediction.utility.EncodingHelper">
+	</bean>
+	<bean id="originalDataSplitter" class="com.luoxuan.prediction.processor.OriginalDataSplitter">
+	</bean>
+	<bean id="semanticAnalyzer" class="com.luoxuan.prediction.processor.SemanticAnalyzer">
+	</bean>
+	<bean id="word2VEC" class="com.luoxuan.prediction.vector.Word2VEC">
+		<constructor-arg type="java.lang.String" value="/Users/bjutales/Documents/Development/LUO/resources/vectors.bin"/>
+	</bean>
+	<bean id="keyWordComputer" class="org.ansj.app.keyword.KeyWordComputer">
+		<constructor-arg type="int" value="3"/>
+	</bean>
+</beans>
