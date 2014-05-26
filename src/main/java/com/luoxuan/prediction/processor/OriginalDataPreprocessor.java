@@ -51,16 +51,21 @@ public class OriginalDataPreprocessor extends SingleFolderLoader {
 						// System.out.println(weibo.getContent());
 
 						// Keywords
-						weibo.getKeywords2().clear();
+						weibo.getWeiboKeywords().clear();
 						Collection<Keyword> keywords = keyWordComputer
 								.computeArticleTfidf(weibo.getContent());
 						for (Keyword keyword : keywords) {
-							weibo.getKeywords2().add(
+							weibo.getWeiboKeywords().add(
 									new com.luoxuan.prediction.domain.Keyword(
 											keyword.getName()));
 						}
 
-						weiboService.saveWeibo(weibo);
+						try {
+							weiboService.saveWeibo(weibo);
+						} catch (Exception e) {
+							System.err.println(e);
+						}
+
 					}
 				}
 			}

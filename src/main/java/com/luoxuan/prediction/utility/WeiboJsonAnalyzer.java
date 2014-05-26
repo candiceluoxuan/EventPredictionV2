@@ -33,15 +33,27 @@ public class WeiboJsonAnalyzer {
 
 	protected PersistentWeibo parse(JsonNode jsonNode) throws ParseException {
 		if (jsonNode != null) {
-			PersistentWeibo weibo = new PersistentWeibo();
-			weibo.setId(jsonNode.get("id").asText());
-			weibo.setUid(jsonNode.get("uid").asText());
-			weibo.setContent(jsonNode.get("text").asText());
+			JsonNode jnId = jsonNode.get("id");
+			JsonNode jnUid = jsonNode.get("uid");
+			JsonNode jnText = jsonNode.get("text");
+			JsonNode jnCreateAt = jsonNode.get("created_at");
 
-			DateFormat dateFormat = new SimpleDateFormat(
-					"EEE MMM d HH:mm:ss Z yyyy", Locale.US);
-			Date date = dateFormat.parse(jsonNode.get("created_at").asText());
-			weibo.setDate(date);
+			PersistentWeibo weibo = new PersistentWeibo();
+			if (jnId != null) {
+				weibo.setId(jnId.asText());
+			}
+			if (jnUid != null) {
+				weibo.setUid(jnUid.asText());
+			}
+			if (jnText != null) {
+				weibo.setContent(jnText.asText());
+			}
+			if (jnCreateAt != null) {
+				DateFormat dateFormat = new SimpleDateFormat(
+						"EEE MMM d HH:mm:ss Z yyyy", Locale.US);
+				Date date = dateFormat.parse(jnCreateAt.asText());
+				weibo.setDate(date);
+			}
 
 			return weibo;
 		}

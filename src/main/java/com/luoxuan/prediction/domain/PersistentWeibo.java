@@ -48,7 +48,7 @@ public class PersistentWeibo implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "weibo_pid")
-	private Set<Keyword> keywords2 = new HashSet<Keyword>();
+	private Set<Keyword> weiboKeywords = new HashSet<Keyword>();
 
 	@Transient
 	private List<String> keywords = new LinkedList<>();
@@ -103,12 +103,12 @@ public class PersistentWeibo implements Serializable {
 		this.keywords = keywords;
 	}
 
-	public Set<Keyword> getKeywords2() {
-		return keywords2;
+	public Set<Keyword> getWeiboKeywords() {
+		return weiboKeywords;
 	}
 
-	public void setKeywords2(Set<Keyword> keywords2) {
-		this.keywords2 = keywords2;
+	public void setWeiboKeywords(Set<Keyword> weiboKeywords) {
+		this.weiboKeywords = weiboKeywords;
 	}
 
 	// public double[] getVector() {
