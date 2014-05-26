@@ -18,11 +18,20 @@
 		<property name="preprocessedDataFolder" value="preprocessed_data/"/>
 		<property name="resultsFolder" value="results/"/>
 	</bean>
+	
 <!-- 	<bean id="singleFolderLoader" class="com.luoxuan.prediction.processor.SingleFolderLoader">
 	</bean> -->
+	
+	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+	</bean>
 	<bean id="encodingHelper" class="com.luoxuan.prediction.utility.EncodingHelper">
 	</bean>
+	<bean id="weiboJsonAnalyzer" class="com.luoxuan.prediction.utility.WeiboJsonAnalyzer">
+	</bean>
+	
 	<bean id="originalDataSplitter" class="com.luoxuan.prediction.processor.OriginalDataSplitter">
+	</bean>
+	<bean id="originalDataPreprocessor" class="com.luoxuan.prediction.processor.OriginalDataPreprocessor">
 	</bean>
 	<bean id="keywordAbstracter" class="com.luoxuan.prediction.processor.KeywordAbstracter">
 	</bean>
@@ -32,10 +41,32 @@
 	<bean id="keyWordComputer" class="org.ansj.app.keyword.KeyWordComputer">
 		<constructor-arg type="int" value="3"/>
 	</bean>
-	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
-	</bean>
 	<bean id="clusterTrainer" class="com.luoxuan.prediction.processor.ClusterTrainer">
 	</bean>
 	<bean id="weiboClassifier" class="com.luoxuan.prediction.processor.WeiboClassifier">
 	</bean>
+	
+	<!-- Data Base -->
+	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+        init-method="init" destroy-method="close">
+        <property name="url" value="jdbc:mysql://localhost:3306/WeiboPrediction" />
+        <property name="username" value="root" />
+        <property name="password" value="123456" />
+        <property name="initialSize" value="1" />
+        <property name="maxActive" value="20" />
+    </bean>
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="edu.shao.springHibernate.po" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.use_sql_comments">false</prop>
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+            </props>
+        </property>
+    </bean> -->
 </beans>
