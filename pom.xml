@@ -22,6 +22,8 @@
 		<!-- Ansj -->
 		<org.ansj.ansj_seg.version>1.4</org.ansj.ansj_seg.version>
 
+		<!-- Jackson -->
+		<com.fasterxml.jackson.core.version>2.3.3</com.fasterxml.jackson.core.version>
 		<!-- FastJson -->
 		<com.alibaba.fastjson.version>1.1.40</com.alibaba.fastjson.version>
 
@@ -56,11 +58,25 @@
 			<version>${org.ansj.ansj_seg.version}</version>
 		</dependency>
 
+		<!-- Jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${com.fasterxml.jackson.core.version}</version>
+		</dependency>
+
 		<!-- FastJson -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${com.alibaba.fastjson.version}</version>
+		</dependency>
+
+		<!-- MOA -->
+		<dependency>
+			<groupId>com.talexu</groupId>
+			<artifactId>moa</artifactId>
+			<version>2013.12-SNAPSHOT</version>
 		</dependency>
 
 		<!-- Spring MVC -->

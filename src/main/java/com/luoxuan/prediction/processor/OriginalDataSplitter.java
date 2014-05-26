@@ -57,7 +57,7 @@ public class OriginalDataSplitter extends SingleFolderLoader {
 
 	@Override
 	public void execute() {
-		super.execute(pathManager.getOriginalDataFolder());
+		execute(pathManager.getOriginalDataFolder());
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.luoxuan.prediction.processor;
 
 import java.io.File;
+import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,7 +29,9 @@ public abstract class SingleFolderLoader {
 						System.out.println("文件夹:" + file2.getAbsolutePath());
 					} else {
 						System.out.println("文件:" + file2.getAbsolutePath());
+						System.out.println("Start: " + Calendar.getInstance().getTime().toString());
 						process(file2);
+						System.out.println("End: " + Calendar.getInstance().getTime().toString());
 					}
 				}
 			}

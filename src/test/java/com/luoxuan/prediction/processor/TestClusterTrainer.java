@@ -1,6 +1,7 @@
 package com.luoxuan.prediction.processor;
 
 import static org.junit.Assert.*;
+import moa.clusterers.Clusterer;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,15 +12,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/application-config.xml")
-public class TestSemanticAnalyzer {
+public class TestClusterTrainer {
 
 	@Autowired
-	@Qualifier("semanticAnalyzer")
-	SemanticAnalyzer semanticAnalyzer;
+	@Qualifier("clusterTrainer")
+	ClusterTrainer clusterTrainer;
 	
 	@Test
 	public void testExecute() {
-		semanticAnalyzer.execute();
+		clusterTrainer.execute();
 	}
 
 }

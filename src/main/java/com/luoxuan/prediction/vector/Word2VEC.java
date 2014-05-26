@@ -209,7 +209,7 @@ public class Word2VEC implements VectorCalculator {
 			double[] wordVector = getWordVector(word);
 			if (wordVector != null) {
 				if (wordsVector == null) {
-					wordsVector = wordVector;
+					wordsVector = wordVector.clone();
 				} else {
 					for (int i = 0; i < size; i++) {
 						wordsVector[i] += wordVector[i];

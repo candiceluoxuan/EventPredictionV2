@@ -8,7 +8,7 @@ public class PersistentWeibo {
 	private String uid;
 	private String content;
 	private List<String> keywords = new LinkedList<>();
-	private double[] vector;
+//	private double[] vector;
 
 	public String getId() {
 		return id;
@@ -42,12 +42,12 @@ public class PersistentWeibo {
 		this.keywords = keywords;
 	}
 
-	public double[] getVector() {
-		return vector;
-	}
-
-	public void setVector(double[] vector) {
-		this.vector = vector;
-	}
+//	public double[] getVector() {
+//		return vector;
+//	}
+//
+//	public void setVector(double[] vector) {
+//		this.vector = vector;
+//	}
 
 }

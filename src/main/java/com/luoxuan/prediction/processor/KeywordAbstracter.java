@@ -23,11 +23,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.luoxuan.prediction.domain.PersistentWeibo;
 import com.luoxuan.prediction.utility.EncodingHelper;
 import com.luoxuan.prediction.vector.VectorCalculator;
 
-public class SemanticAnalyzer extends SingleFolderLoader {
+public class KeywordAbstracter extends SingleFolderLoader {
 
 	Pattern textPattern = Pattern.compile("\"text\": \"(.*?)\"");
 	Pattern idPattern = Pattern.compile("^(.*?)\t(.*?)\t");
@@ -44,31 +45,34 @@ public class SemanticAnalyzer extends SingleFolderLoader {
 	@Qualifier("word2VEC")
 	VectorCalculator vectorCalculator;
 
-	public SemanticAnalyzer() {
+	@Autowired
+	@Qualifier("objectMapper")
+	ObjectMapper objectMapper;
+
+	PersistentWeibo weibo = new PersistentWeibo();
+
+	public KeywordAbstracter() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void execute() {
-		super.execute(pathManager.getOriginalDataFolder());
+		execute(pathManager.getOriginalDataFolder());
 	}
 
 	@Override
 	protected void process(File file) {
-		System.out.println("Start: " + Calendar.getInstance().getTime().toString());
-		
 		File outputFile = new File(pathManager.getPreprocessedDataFolder()
 				+ file.getName());
 
 		try (BufferedReader input = new BufferedReader(new InputStreamReader(
 				new FileInputStream(file), "gbk"));
 				PrintWriter out = new PrintWriter(new BufferedWriter(
-						new OutputStreamWriter(new FileOutputStream(outputFile,
-								true), "UTF-8")))) {
+						new OutputStreamWriter(
+								new FileOutputStream(outputFile), "UTF-8")))) {
 
 			String text;
 			while ((text = input.readLine()) != null) {
-				PersistentWeibo weibo = new PersistentWeibo();
 
 				Matcher idMatcher = idPattern.matcher(text);
 				if (idMatcher.find()) {
@@ -77,7 +81,7 @@ public class SemanticAnalyzer extends SingleFolderLoader {
 				}
 
 				Matcher textMatcher = textPattern.matcher(text);
-				while (textMatcher != null && textMatcher.find()) {
+				while (textMatcher.find()) {
 					String content_unicode = textMatcher.group(1);
 					String content = encodingHelper
 							.unicodeToUTF8(content_unicode);
@@ -85,26 +89,25 @@ public class SemanticAnalyzer extends SingleFolderLoader {
 					// content
 					weibo.setContent(content);
 					// Keywords
+					weibo.getKeywords().clear();
 					Collection<Keyword> keywords = keyWordComputer
 							.computeArticleTfidf(content);
-					List<String> keywordList = new LinkedList<String>();
 					for (Keyword keyword : keywords) {
-						keywordList.add(keyword.getName());
+						weibo.getKeywords().add(keyword.getName());
 					}
-					weibo.setKeywords(keywordList);
 
 					// vector
-					weibo.setVector(vectorCalculator.getWordsVector(weibo
-							.getKeywords()));
+//					weibo.setVector(vectorCalculator.getWordsVector(weibo
+//							.getKeywords()));
 
-					out.println(JSON.toJSONString(weibo));
+					// out.println(JSON.toJSONString(weibo));
+					out.println(objectMapper.writeValueAsString(weibo));
 				}
 			}
 		} catch (IOException ioException) {
 			System.err.println("File Error!");
 		} finally {
-			System.out.println("End: " + Calendar.getInstance().getTime().toString());
-//			System.out.println("File " + file.getName() + " complete!");
+			// System.out.println("File " + file.getName() + " complete!");
 		}
 	}
 

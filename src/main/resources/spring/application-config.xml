@@ -24,12 +24,18 @@
 	</bean>
 	<bean id="originalDataSplitter" class="com.luoxuan.prediction.processor.OriginalDataSplitter">
 	</bean>
-	<bean id="semanticAnalyzer" class="com.luoxuan.prediction.processor.SemanticAnalyzer">
+	<bean id="keywordAbstracter" class="com.luoxuan.prediction.processor.KeywordAbstracter">
 	</bean>
 	<bean id="word2VEC" class="com.luoxuan.prediction.vector.Word2VEC">
 		<constructor-arg type="java.lang.String" value="/Users/bjutales/Documents/Development/LUO/resources/vectors.bin"/>
 	</bean>
 	<bean id="keyWordComputer" class="org.ansj.app.keyword.KeyWordComputer">
 		<constructor-arg type="int" value="3"/>
+	</bean>
+	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+	</bean>
+	<bean id="clusterTrainer" class="com.luoxuan.prediction.processor.ClusterTrainer">
+	</bean>
+	<bean id="weiboClassifier" class="com.luoxuan.prediction.processor.WeiboClassifier">
 	</bean>
 </beans>
