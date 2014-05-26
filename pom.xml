@@ -72,6 +72,12 @@
 			<version>${com.alibaba.fastjson.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.google.code.externalsortinginjava</groupId>
+			<artifactId>externalsortinginjava</artifactId>
+			<version>0.1.9</version>
+		</dependency>
+
 		<!-- MOA -->
 		<dependency>
 			<groupId>com.talexu</groupId>
@@ -111,13 +117,13 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
-		
+
 		<!-- Spring orm -->
 		<dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring-framework.version}</version>
-        </dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
 
 		<!-- Logging with SLF4J & LogBack -->
 		<dependency>

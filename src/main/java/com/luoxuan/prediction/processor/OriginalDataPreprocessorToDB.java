@@ -17,7 +17,7 @@ import com.luoxuan.prediction.domain.PersistentWeibo;
 import com.luoxuan.prediction.service.WeiboService;
 import com.luoxuan.prediction.utility.WeiboJsonAnalyzer;
 
-public class OriginalDataPreprocessor extends SingleFolderLoader {
+public class OriginalDataPreprocessorToDB extends SingleFolderLoader {
 
 	@Autowired
 	@Qualifier("weiboJsonAnalyzer")
@@ -27,8 +27,8 @@ public class OriginalDataPreprocessor extends SingleFolderLoader {
 	@Qualifier("keyWordComputer")
 	KeyWordComputer keyWordComputer;
 
-	@Autowired
-	@Qualifier("weiboServiceImpl")
+//	@Autowired
+//	@Qualifier("weiboServiceImpl")
 	WeiboService weiboService;
 
 	@Override

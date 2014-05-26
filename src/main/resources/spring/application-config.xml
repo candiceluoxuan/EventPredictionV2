@@ -17,6 +17,8 @@
 		<property name="resourcesFolder" value="resources/" />
 		<property name="corpus" value="corpus.bin" />
 		<property name="vectors" value="vectors.bin" />
+		<property name="weibos" value="weibos.txt" />
+		<property name="sortedWeibos" value="sortedWeibos.txt" />
 		<property name="clusters" value="clusters.bin" />
 		<property name="preprocessedDataFolder" value="preprocessed_data/" />
 		<property name="resultsFolder" value="results/" />
@@ -34,8 +36,14 @@
 
 	<bean id="originalDataSplitter" class="com.luoxuan.prediction.processor.OriginalDataSplitter">
 	</bean>
-	<bean id="originalDataPreprocessor"
-		class="com.luoxuan.prediction.processor.OriginalDataPreprocessor">
+	<bean id="originalDataPreprocessorToDB"
+		class="com.luoxuan.prediction.processor.OriginalDataPreprocessorToDB">
+	</bean>
+	<bean id="originalDataPreprocessorToFile"
+		class="com.luoxuan.prediction.processor.OriginalDataPreprocessorToFile">
+	</bean>
+	<bean id="preprocessedWeiboSorter"
+		class="com.luoxuan.prediction.processor.PreprocessedWeiboSorter">
 	</bean>
 	<bean id="keywordAbstracter" class="com.luoxuan.prediction.processor.KeywordAbstracter">
 	</bean>
@@ -52,41 +60,20 @@
 	</bean>
 
 	<!-- Data Base -->
-	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
-		init-method="init" destroy-method="close">
-		<property name="url"
-			value="jdbc:mysql://localhost:3306/weibo_prediction?useUnicode=true&amp;characterEncoding=GBK" />
-		<property name="username" value="root" />
-		<!-- <property name="password" value="123456" /> -->
-		<property name="initialSize" value="1" />
-		<property name="maxActive" value="20" />
-	</bean>
-
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="com.luoxuan.prediction.domain" />
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.show_sql">false</prop>
-				<prop key="hibernate.format_sql">false</prop>
-				<prop key="hibernate.use_sql_comments">false</prop>
-				<prop key="hibernate.cache.use_second_level_cache">false</prop>
-			</props>
-		</property>
-	</bean>
-
-	<bean id="weiboDaoImpl" class="com.luoxuan.prediction.dao.WeiboDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory"></property>
-	</bean>
-	<bean id="weiboServiceImpl" class="com.luoxuan.prediction.service.WeiboServiceImpl">
-	</bean>
-
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" 
+		init-method="init" destroy-method="close"> <property name="url" value="jdbc:mysql://localhost:3306/weibo_prediction?useUnicode=true&amp;characterEncoding=GBK" 
+		/> <property name="username" value="root" /> <property name="password" value="123456" 
+		/> <property name="initialSize" value="1" /> <property name="maxActive" value="20" 
+		/> </bean> <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 
+		<property name="dataSource" ref="dataSource" /> <property name="packagesToScan" 
+		value="com.luoxuan.prediction.domain" /> <property name="hibernateProperties"> 
+		<props> <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> 
+		<prop key="hibernate.show_sql">false</prop> <prop key="hibernate.format_sql">false</prop> 
+		<prop key="hibernate.use_sql_comments">false</prop> <prop key="hibernate.cache.use_second_level_cache">false</prop> 
+		</props> </property> </bean> <bean id="weiboDaoImpl" class="com.luoxuan.prediction.dao.WeiboDaoImpl"> 
+		<property name="sessionFactory" ref="sessionFactory"></property> </bean> 
+		<bean id="weiboServiceImpl" class="com.luoxuan.prediction.service.WeiboServiceImpl"> 
+		</bean> <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"> 
+		<property name="sessionFactory" ref="sessionFactory" /> </bean> <tx:annotation-driven 
+		transaction-manager="transactionManager" /> -->
 </beans>

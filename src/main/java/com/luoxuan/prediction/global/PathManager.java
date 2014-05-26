@@ -7,6 +7,8 @@ public class PathManager {
 	private String resourcesFolder;
 	private String corpus;
 	private String vectors;
+	private String weibos;
+	private String sortedWeibos;
 	private String clusters;
 	private String preprocessedDataFolder;
 	private String resultsFolder;
@@ -49,6 +51,22 @@ public class PathManager {
 
 	public void setVectors(String vectors) {
 		this.vectors = vectors;
+	}
+
+	public String getWeibos() {
+		return getResourcesFolder() + weibos;
+	}
+
+	public void setWeibos(String weibos) {
+		this.weibos = weibos;
+	}
+
+	public String getSortedWeibos() {
+		return getResourcesFolder() + sortedWeibos;
+	}
+
+	public void setSortedWeibos(String sortedWeibos) {
+		this.sortedWeibos = sortedWeibos;
 	}
 
 	public String getClusters() {

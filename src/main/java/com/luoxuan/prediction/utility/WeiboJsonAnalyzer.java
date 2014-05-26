@@ -14,10 +14,10 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.luoxuan.prediction.domain.PersistentWeibo;
+import com.luoxuan.prediction.domain.PreprocessedWeibo;
 
 public class WeiboJsonAnalyzer {
 
@@ -60,9 +60,34 @@ public class WeiboJsonAnalyzer {
 		return null;
 	}
 
-	protected PersistentWeibo parse(String json)
-			throws JsonProcessingException, ParseException, IOException {
-		return parse(objectMapper.readTree(json));
+	protected PreprocessedWeibo parsePreprocessedWeibo(JsonNode jsonNode)
+			throws ParseException {
+		if (jsonNode != null) {
+			JsonNode jnId = jsonNode.get("id");
+			JsonNode jnUid = jsonNode.get("uid");
+			JsonNode jnText = jsonNode.get("text");
+			JsonNode jnCreateAt = jsonNode.get("created_at");
+
+			PreprocessedWeibo weibo = new PreprocessedWeibo();
+			if (jnId != null) {
+				weibo.setId(jnId.asText());
+			}
+			if (jnUid != null) {
+				weibo.setUid(jnUid.asText());
+			}
+			if (jnText != null) {
+				weibo.setContent(jnText.asText());
+			}
+			if (jnCreateAt != null) {
+				DateFormat dateFormat = new SimpleDateFormat(
+						"EEE MMM d HH:mm:ss Z yyyy", Locale.US);
+				Date date = dateFormat.parse(jnCreateAt.asText());
+				weibo.setDate(date);
+			}
+
+			return weibo;
+		}
+		return null;
 	}
 
 	public List<PersistentWeibo> execute(String json) {
@@ -83,6 +108,40 @@ public class WeiboJsonAnalyzer {
 
 			try {
 				PersistentWeibo weibo = parse(root.get("retweeted_status"));
+				if (weibo != null) {
+					weibos.add(weibo);
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return weibos;
+	}
+
+	public List<PreprocessedWeibo> executePreprocessedWeibo(String json) {
+		List<PreprocessedWeibo> weibos = new LinkedList<PreprocessedWeibo>();
+
+		try {
+			JsonNode root = objectMapper.readTree(json);
+
+			try {
+				PreprocessedWeibo weibo = parsePreprocessedWeibo(root);
+				if (weibo != null) {
+					weibos.add(weibo);
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			try {
+				PreprocessedWeibo weibo = parsePreprocessedWeibo(root
+						.get("retweeted_status"));
 				if (weibo != null) {
 					weibos.add(weibo);
 				}

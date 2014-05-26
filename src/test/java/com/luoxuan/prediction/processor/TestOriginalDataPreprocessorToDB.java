@@ -11,15 +11,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/application-config.xml")
-public class TestOriginalDataPreprocessor {
+public class TestOriginalDataPreprocessorToDB {
 
-	@Autowired
-	@Qualifier("originalDataPreprocessor")
-	OriginalDataPreprocessor originalDataPreprocessor;
-	
+//	@Autowired
+//	@Qualifier("originalDataPreprocessorToDB")
+//	OriginalDataPreprocessorToDB originalDataPreprocessorToDB;
+
 	@Test
 	public void testExecute() {
-		originalDataPreprocessor.execute();
+//		originalDataPreprocessorToDB.execute();
 	}
 
 }

@@ -10,8 +10,8 @@ import com.luoxuan.prediction.domain.PersistentWeibo;
 @Transactional
 public class WeiboServiceImpl implements WeiboService {
 
-	@Autowired
-	@Qualifier("weiboDaoImpl")
+//	@Autowired
+//	@Qualifier("weiboDaoImpl")
 	private WeiboDao weiboDao;
 
 	public WeiboDao getWeiboDao() {
