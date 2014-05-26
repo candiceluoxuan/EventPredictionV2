@@ -2,18 +2,26 @@ package com.luoxuan.prediction.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name = "weibo")
+@Table(name = "weibos")
 public class PersistentWeibo implements Serializable {
 	/**
 	 * 
@@ -32,17 +40,31 @@ public class PersistentWeibo implements Serializable {
 	private String uid;
 
 	@Column(name = "date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
 	@Column(name = "content")
 	private String content;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "weibo_pid")
+	private Set<Keyword> keywords2 = new HashSet<Keyword>();
+
+	@Transient
 	private List<String> keywords = new LinkedList<>();
 
 	// private double[] vector;
 
 	public String getId() {
 		return id;
+	}
+
+	public Long getPid() {
+		return pid;
+	}
+
+	public void setPid(Long pid) {
+		this.pid = pid;
 	}
 
 	public void setId(String id) {
@@ -79,6 +101,14 @@ public class PersistentWeibo implements Serializable {
 
 	public void setKeywords(List<String> keywords) {
 		this.keywords = keywords;
+	}
+
+	public Set<Keyword> getKeywords2() {
+		return keywords2;
+	}
+
+	public void setKeywords2(Set<Keyword> keywords2) {
+		this.keywords2 = keywords2;
 	}
 
 	// public double[] getVector() {

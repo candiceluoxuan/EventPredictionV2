@@ -2,71 +2,91 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<!-- Uncomment and add your base-package here: -->
 	<!-- <context:component-scan base-package="com.luoxuan.prediction" /> -->
 
 	<bean id="pathManager" class="com.luoxuan.prediction.global.PathManager">
-		<property name="rootPath" value="/Users/bjutales/Documents/Development/LUO/"/>
-		<property name="originalDataFolder" value="data/"/>
-		<property name="resourcesFolder" value="resources/"/>
-		<property name="corpus" value="corpus.bin"/>
-		<property name="vectors" value="vectors.bin"/>
-		<property name="clusters" value="clusters.bin"/>
-		<property name="preprocessedDataFolder" value="preprocessed_data/"/>
-		<property name="resultsFolder" value="results/"/>
+		<property name="rootPath" value="/Users/bjutales/Documents/Development/LUO/" />
+		<property name="originalDataFolder" value="data/" />
+		<property name="resourcesFolder" value="resources/" />
+		<property name="corpus" value="corpus.bin" />
+		<property name="vectors" value="vectors.bin" />
+		<property name="clusters" value="clusters.bin" />
+		<property name="preprocessedDataFolder" value="preprocessed_data/" />
+		<property name="resultsFolder" value="results/" />
 	</bean>
-	
-<!-- 	<bean id="singleFolderLoader" class="com.luoxuan.prediction.processor.SingleFolderLoader">
-	</bean> -->
-	
+
+	<!-- <bean id="singleFolderLoader" class="com.luoxuan.prediction.processor.SingleFolderLoader"> 
+		</bean> -->
+
 	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
 	</bean>
 	<bean id="encodingHelper" class="com.luoxuan.prediction.utility.EncodingHelper">
 	</bean>
 	<bean id="weiboJsonAnalyzer" class="com.luoxuan.prediction.utility.WeiboJsonAnalyzer">
 	</bean>
-	
+
 	<bean id="originalDataSplitter" class="com.luoxuan.prediction.processor.OriginalDataSplitter">
 	</bean>
-	<bean id="originalDataPreprocessor" class="com.luoxuan.prediction.processor.OriginalDataPreprocessor">
+	<bean id="originalDataPreprocessor"
+		class="com.luoxuan.prediction.processor.OriginalDataPreprocessor">
 	</bean>
 	<bean id="keywordAbstracter" class="com.luoxuan.prediction.processor.KeywordAbstracter">
 	</bean>
 	<bean id="word2VEC" class="com.luoxuan.prediction.vector.Word2VEC">
-		<constructor-arg type="java.lang.String" value="/Users/bjutales/Documents/Development/LUO/resources/vectors.bin"/>
+		<constructor-arg type="java.lang.String"
+			value="/Users/bjutales/Documents/Development/LUO/resources/vectors.bin" />
 	</bean>
 	<bean id="keyWordComputer" class="org.ansj.app.keyword.KeyWordComputer">
-		<constructor-arg type="int" value="3"/>
+		<constructor-arg type="int" value="3" />
 	</bean>
 	<bean id="clusterTrainer" class="com.luoxuan.prediction.processor.ClusterTrainer">
 	</bean>
 	<bean id="weiboClassifier" class="com.luoxuan.prediction.processor.WeiboClassifier">
 	</bean>
-	
+
 	<!-- Data Base -->
-	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
-        init-method="init" destroy-method="close">
-        <property name="url" value="jdbc:mysql://localhost:3306/WeiboPrediction" />
-        <property name="username" value="root" />
-        <property name="password" value="123456" />
-        <property name="initialSize" value="1" />
-        <property name="maxActive" value="20" />
-    </bean>
-    
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="edu.shao.springHibernate.po" />
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">false</prop>
-                <prop key="hibernate.use_sql_comments">false</prop>
-                <prop key="hibernate.cache.use_second_level_cache">false</prop>
-            </props>
-        </property>
-    </bean> -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/weibo_prediction?useUnicode=true&amp;characterEncoding=GBK" />
+		<property name="username" value="root" />
+		<!-- <property name="password" value="123456" /> -->
+		<property name="initialSize" value="1" />
+		<property name="maxActive" value="20" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.luoxuan.prediction.domain" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.use_sql_comments">false</prop>
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="weiboDaoImpl" class="com.luoxuan.prediction.dao.WeiboDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="weiboServiceImpl" class="com.luoxuan.prediction.service.WeiboServiceImpl">
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>
