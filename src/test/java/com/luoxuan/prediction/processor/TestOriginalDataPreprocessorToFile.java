@@ -17,9 +17,14 @@ public class TestOriginalDataPreprocessorToFile {
 	@Qualifier("originalDataPreprocessorToFile")
 	OriginalDataPreprocessorToFile originalDataPreprocessorToFile;
 	
+	@Autowired
+	@Qualifier("preprocessedWeiboSorter")
+	PreprocessedWeiboSorter preprocessedWeiboSorter;
+	
 	@Test
 	public void testExecute() {
 		originalDataPreprocessorToFile.execute();
+		preprocessedWeiboSorter.execute();
 	}
 
 }

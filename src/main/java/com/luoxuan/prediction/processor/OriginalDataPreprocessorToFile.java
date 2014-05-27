@@ -66,6 +66,9 @@ public class OriginalDataPreprocessorToFile extends SingleFolderLoader {
 						for (Keyword keyword : keywords) {
 							weibo.getKeywords().add(keyword.getName());
 						}
+						
+						// fileName
+						weibo.setFile(file.getName());
 
 						out.println(objectMapper.writeValueAsString(weibo));
 					}

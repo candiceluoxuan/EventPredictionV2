@@ -11,6 +11,7 @@ public class PreprocessedWeibo {
 	private Date date;
 	private String content;
 	private List<String> keywords = new LinkedList<>();
+	private String file;
 
 	public String getId() {
 		return id;
@@ -50,6 +51,14 @@ public class PreprocessedWeibo {
 
 	public void setKeywords(List<String> keywords) {
 		this.keywords = keywords;
+	}
+
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
 	}
 
 }

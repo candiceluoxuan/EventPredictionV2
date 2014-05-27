@@ -2,6 +2,7 @@ package com.luoxuan.prediction.processor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -54,12 +55,15 @@ public class PreprocessedWeiboSorter {
 
 	public void execute() {
 		try {
+			System.out.println("Begin external sorting: " + Calendar.getInstance().getTime().toString());
 			List<File> temps = ExternalSort.sortInBatch(
 					new File(pathManager.getWeibos()), cmp);
 
+			System.out.println("Begin merge sorted files: " + Calendar.getInstance().getTime().toString());
 			ExternalSort.mergeSortedFiles(temps,
 					new File(pathManager.getSortedWeibos()), cmp);
 
+			System.out.println("External sorting finish: " + Calendar.getInstance().getTime().toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
