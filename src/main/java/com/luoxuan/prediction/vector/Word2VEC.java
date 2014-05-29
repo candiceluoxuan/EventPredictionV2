@@ -2,6 +2,7 @@ package com.luoxuan.prediction.vector;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,6 +39,11 @@ public class Word2VEC implements VectorCalculator {
 	 * @throws IOException
 	 */
 	public void loadGoogleModel(String path) throws IOException {
+		File dir = new File(path);
+		if (!dir.exists()) {
+			return;
+		}
+		
 		DataInputStream dis = null;
 		BufferedInputStream bis = null;
 		double len = 0;

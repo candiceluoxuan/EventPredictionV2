@@ -36,9 +36,9 @@
 
 	<bean id="originalDataSplitter" class="com.luoxuan.prediction.processor.OriginalDataSplitter">
 	</bean>
-	<bean id="originalDataPreprocessorToDB"
+	<!-- <bean id="originalDataPreprocessorToDB"
 		class="com.luoxuan.prediction.processor.OriginalDataPreprocessorToDB">
-	</bean>
+	</bean> -->
 	<bean id="originalDataPreprocessorToFile"
 		class="com.luoxuan.prediction.processor.OriginalDataPreprocessorToFile">
 	</bean>
